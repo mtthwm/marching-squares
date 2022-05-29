@@ -39,11 +39,11 @@ const Grid = function (width, height, cellSize)
         return {cornerX, cornerY};
     };
 
-    this.drawLines = (ctx) => {
+    this.drawLines = (ctx, color="#FFFFFF") => {
         const width = this.arr[0].length * this.cellSize;
         const height = this.arr.length * this.cellSize;
 
-        ctx.strokeStyle = "#FFFFFF";
+        ctx.strokeStyle = color;
 
         // Vertical Lines
         for (let y = 0; y < width; y += cellSize)
@@ -64,10 +64,10 @@ const Grid = function (width, height, cellSize)
         }
     };
 
-    this.drawValues = (ctx, offsetX, offsetY) => {
+    this.drawValues = (ctx, offsetX, offsetY, color="#FFFFFF") => {
         this._2DArrayUtil(this.arr, (value, x, y) => {
             ctx.font = '12px serif';
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = color;
             ctx.fillText(value.value, x, y, this.cellSize * 0.75);
         }, offsetX, offsetY);
     };
@@ -79,10 +79,10 @@ const Grid = function (width, height, cellSize)
         }, 0, 0);
     };
 
-    this.drawCoordinates = (ctx) => {
+    this.drawCoordinates = (ctx, color="#FFFFFF") => {
         this._2DArrayUtil(this.arr, (value, x, y) => {
             ctx.font = '12px serif';
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = color;
             ctx.fillText(`(${Math.floor(x / cellSize)},${Math.floor(y / cellSize)})`, x, y, this.cellSize * 0.75);
         }, cellSize * .4, cellSize * .5);
     }
