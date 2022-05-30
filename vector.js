@@ -14,4 +14,13 @@ const Vec2 = function (x, y) {
     this.add = (vector) => {
         return new Vec2(this.x + vector.x, this.y + vector.y);
     };
+    this.dot = (vector) => {
+        return this.x * vector.x + this.y * vector.y;
+    };
+    this.perpendicularClockwise = () => {
+        return new Vec2(this.y, -this.x)
+    };
+    this.perpendicularCounterclockwise = () => {
+        return new Vec2(-this.y, this.x)
+    };
 }

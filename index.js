@@ -33,13 +33,22 @@ const Circle = function (x, y, radius, velocity = new Vec2(0, 0)) {
     //     return new Vec2(this.x, this.y).add(normalDir.multiply(scalar));
     // };
 
-    this._getIntersectionWithLine = (xInit, yInit, dirX, dirY) => {
-        const p = new Vec2(this.x, this.y).add(this.velocity.normalized().multiply(this.radius));
-        const slope = dirY / dirX;
+    this._getIntersectionWithLine = (position, direction) => {
+        let perpendicularVector;
 
-        const a = ((p.y - yInit) - ((p.x - xInit) * slope)) / (this.velocity.x - this.velocity.y);
+        if (direction.y < 0)
+        {
+            perpendicularVector = direction.perpendicularCounterclockwise().normalized();
+        }
+        else
+        {
+            perpendicularVector = direction.perpendicularClockwise().normalized();
+        }
 
-        return p.add(this.velocity.multiply(a));
+        
+        const cosTheta = this.velocity.normalized().dot(perpendicularVector.normalized());
+        const b = a / cosTheta;
+        return this.velocity.normalized() * (b - this.radius);
     };
 }
 
