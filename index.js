@@ -127,17 +127,17 @@ const circleIntersectFunction = (x, y, circle) => {
     return (circle.radius*circle.radius) / (Math.pow(x - circle.x, 2) + Math.pow(y - circle.y, 2));
 };
 
-const drawLine = (ctx, x1, y1, x2, y2, color="#FFFFFF") => {
+const drawLine = (ctx, from, to, color="#FFFFFF") => {
     ctx.strokeStyle = color;
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
+    ctx.moveTo(from.x, from.y);
+    ctx.lineTo(to.x, to.y);
     ctx.stroke();
 };
 
 const drawRay = (ctx, position, direction, length, color="#FFFFFF") => {
     const target = position.add(direction.normalized().multiply(length));
-    return drawLine(ctx, position.x, position.y, target.x, target.y, color);
+    return drawLine(ctx, position, target, color);
 };
 
 const gridCellToTile = (grid, x, y) => {
@@ -185,6 +185,8 @@ const draw = () => {
     // myGrid.drawCoordinates(ctx);
 
     // drawCorners(ctx, myGrid);
+
+    drawLine(ctx, new Vec2(0, 0), new Vec2(width, height), "#FF00FF")
 
     myGrid.forEachCell((element, x, y) => {
         drawTile(ctx, myGrid, x, y)

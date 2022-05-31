@@ -95,7 +95,27 @@ const Grid = function (width, height, cellSize)
         this._2DArrayUtil(this.arr, (element, x, y) => {
             callback(element, Math.floor(x / cellSize), Math.floor(y / cellSize));
         }, 0, 0);
-      };
+    };
+
+    this.getCornerWeightArray = (x, y) => {
+        let final = [];
+        
+        for (let i = y; i <= y + 1; i++)
+        {
+            for (let j = x; j <= x + 1; j++)
+            {
+                if (j >= this.width || i >= this.height)
+                {
+                    final.push(1);
+                }
+                else
+                {
+                    final.push(this.getValue(j, i));
+                }
+            }
+        }
+        return final;
+    }
 
     // Does *something* for every item in a 2D array, calls a callback function, passing in the value, as well as the x and y values on a grid.
     this._2DArrayUtil = (arr, callback, x = 0, y = 0, ) => {
