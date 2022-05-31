@@ -23,15 +23,72 @@ const Circle = function (x, y, radius, velocity = new Vec2(0, 0)) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 360);
         ctx.stroke();
-    }
+    };
 
-    // this._getXIntersection = (xValue) => {
-    //     const normalDir = this.velocity.normalized();
-    //     const p = new Vec2(this.x, this.y).add(normalDir.multiply(this.radius));
+    this._getIntersectionWithBorder = (xOrY, lower, upper) => {
+        const p = (new Vec2(this.x, this.y)).add(this.velocity.normalized().multiply(this.radius));
+        let border;
+        let mod;
+        
+        if (this.velocity[xOrY] < 0)
+        {
+            border = lower;
+            mod = -1;
+        }
+        else if (this.velocity[xOrY] > 0)
+        {
+            border = upper;
+            mod = 1;
+        } 
+        else
+        {
+            return null;
+        }
 
-    //     const scalar = xValue / normalDir.x; *
-    //     return new Vec2(this.x, this.y).add(normalDir.multiply(scalar));
-    // };
+        const a = Math.abs(border - p[xOrY]);
+        const cosTheta = this.velocity[xOrY] / this.velocity.magnitude();
+        const b = a / cosTheta;
+        return p.add(this.velocity.normalized().multiply((b * mod) - this.radius));
+    };
+
+    this.move = (amount, lowerBoundX, upperBoundX, lowerBoundY, upperBoundY) => {
+        const position = new Vec2(this.x, this.y);
+        const target = position.add(amount);
+        let intersection = this._getIntersectionWithHorizontalBorder(lowerBoundX, upperBoundX);
+        if (intersection != null)
+        {
+            const distToIntersection = position.distance(intersection);
+            const distToTarget = position.distance(target);
+            if (distToIntersection < distToTarget)
+            {
+                this.velocity = new Vec2(this.velocity.x, -this.velocity.y);
+                this.move(intersection.add(position.multiply(-1)), lowerBoundX, upperBoundX, lowerBoundY, upperBoundY);
+                return;
+            }
+        }
+        intersection = this._getIntersectionWithVerticalBorder(lowerBoundY, upperBoundY);
+        if (intersection != null)
+        {
+            const distToIntersection = position.distance(intersection);
+            const distToTarget = position.distance(target);
+            if (distToIntersection < distToTarget)
+            {
+                this.velocity = new Vec2(-this.velocity.x, this.velocity.y);
+                this.move(intersection.add(position.multiply(-1)), lowerBoundX, upperBoundX, lowerBoundY, upperBoundY);
+                return;
+            }
+        }
+        this.x = target.x;
+        this.y = target.y;
+    };
+
+    this._getIntersectionWithVerticalBorder = (lower, upper) => {
+        return this._getIntersectionWithBorder("x", lower, upper);
+    };
+
+    this._getIntersectionWithHorizontalBorder = (lower, upper) => {
+        return this._getIntersectionWithBorder("y", lower, upper)
+    };
 
     this._getIntersectionWithLine = (position, direction) => {
         let perpendicularVector;
@@ -57,8 +114,8 @@ const Circle = function (x, y, radius, velocity = new Vec2(0, 0)) {
 canvas.width = width;
 canvas.height = height;
 
-circles.push(new Circle(width / 4, width / 4, width / 5, new Vec2(-1, -1.25)));
-circles.push(new Circle(width / 5, width * 0.45, width / 10, new Vec2(1, 0)));
+circles.push(new Circle(width / 4, width / 4.5, width / 5, new Vec2(-2, -2.25)));
+circles.push(new Circle(width / 5, width * 0.45, width / 10, new Vec2(.1, 2)));
 const myGrid = new Grid(gridSize, gridSize, width / gridSize);
 
 const circleIntersectFunction = (x, y, circle) => {
@@ -131,13 +188,12 @@ const draw = () => {
     circles.forEach((element) => {
         element.draw(ctx);
         drawRay(ctx, new Vec2(element.x, element.y), element.velocity, 1000);
-        const wallRayPosition = new Vec2(500, 0);
+        const wallRayPosition = new Vec2(width, 0);
         const wallRayDirection = new Vec2(0, 1);
-        const collision = circles[1]._getIntersectionWithLine(wallRayPosition.x, wallRayPosition.y, wallRayDirection.x, wallRayDirection.y);
+        const collision = element._getIntersectionWithVerticalBorder(0, height);
         drawRay(ctx, wallRayPosition, wallRayDirection, 1000, "#0000FF");
         ctx.strokeStyle = "#FF00FF";
         ctx.beginPath();
-        console.log(collision);
         ctx.arc(collision.x, collision.y, 5, 0, 360);
         ctx.stroke();
     });
@@ -145,8 +201,7 @@ const draw = () => {
 
 const update = () => {
     circles.forEach((element) => {
-        element.x += element.velocity.x;
-        element.y += element.velocity.y;
+        element.move(element.velocity, 0, width, 0, height);
     });
 
     myGrid.forEachCellCoords((element, x, y) => {

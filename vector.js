@@ -23,4 +23,7 @@ const Vec2 = function (x, y) {
     this.perpendicularCounterclockwise = () => {
         return new Vec2(-this.y, this.x)
     };
+    this.distance = (position) => {
+        return Math.sqrt(Math.pow(position.x - this.x, 2) + Math.pow(position.y - this.y, 2));
+    };
 }
