@@ -114,8 +114,13 @@ const Circle = function (x, y, radius, velocity = new Vec2(0, 0)) {
 canvas.width = width;
 canvas.height = height;
 
-circles.push(new Circle(width / 4, width / 4.5, width / 5, new Vec2(-2, -2.25)));
-circles.push(new Circle(width / 5, width * 0.45, width / 10, new Vec2(.1, 2)));
+circles.push(new Circle(150, 160, 50, new Vec2(1, 5)));
+circles.push(new Circle(500, 240, 75, new Vec2(-2, 3)));
+circles.push(new Circle(140, 70, 35, new Vec2(1, -3)));
+circles.push(new Circle(500, 563, 60, new Vec2(-7, 2)));
+circles.push(new Circle(450, 160, 50, new Vec2(3, -2)));
+circles.push(new Circle(400, 350, 100, new Vec2(0.5, 3)));
+
 const myGrid = new Grid(gridSize, gridSize, width / gridSize);
 
 const circleIntersectFunction = (x, y, circle) => {
@@ -175,28 +180,19 @@ const draw = () => {
     drawBackground(ctx);
 
     // myGrid.drawColors(ctx);
-    myGrid.drawLines(ctx, grid_line_color);
+    // myGrid.drawLines(ctx, grid_line_color);
     // myGrid.drawValues(ctx);
     // myGrid.drawCoordinates(ctx);
 
-    drawCorners(ctx, myGrid);
+    // drawCorners(ctx, myGrid);
 
     myGrid.forEachCell((element, x, y) => {
         drawTile(ctx, myGrid, x, y)
     });
 
-    circles.forEach((element) => {
-        element.draw(ctx);
-        drawRay(ctx, new Vec2(element.x, element.y), element.velocity, 1000);
-        const wallRayPosition = new Vec2(width, 0);
-        const wallRayDirection = new Vec2(0, 1);
-        const collision = element._getIntersectionWithVerticalBorder(0, height);
-        drawRay(ctx, wallRayPosition, wallRayDirection, 1000, "#0000FF");
-        ctx.strokeStyle = "#FF00FF";
-        ctx.beginPath();
-        ctx.arc(collision.x, collision.y, 5, 0, 360);
-        ctx.stroke();
-    });
+    // circles.forEach((element) => {
+    //     element.draw(ctx);
+    // });
 };
 
 const update = () => {
