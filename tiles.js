@@ -16,8 +16,51 @@ const bottomMid = (cornerX, cornerY, cellSize) => {
     return [cornerX + cellSize / 2, cornerY + cellSize];
 };
 
+const TileInput = function (corner, size, cornerWeights) {
+    this.corner = corner;
+    this.size = size;
+    this.cornerWeights = cornerWeights;
+
+    this.leftMid = () => {
+        return new Vec2(corner.x, corner.y + this.size*this._skewPercent(cornerWeights[0], cornerWeights[2]));
+    }
+
+    this.rightMid = () => {
+        return new Vec2(corner.x + this.size, corner.y + this.size*this._skewPercent(cornerWeights[1], cornerWeights[3]));
+    }
+
+    this.topMid = () => {
+        return new Vec2(corner.x + this.size*this._skewPercent(cornerWeights[0], cornerWeights[1]), corner.y);
+    }
+
+    this.bottomMid = () => {
+        return new Vec2(corner.x + this.size*this._skewPercent(cornerWeights[2], cornerWeights[3]), corner.y + this.size);
+    }
+
+    this._skewPercent = (low, high) => {
+        return 0.5 / (high - low);
+    };
+}
+
+const Tile = function () {
+    this.lines = [];
+
+    this.addLine = (from, to) => {
+        this.lines.push({from, to});
+    };
+
+    this.draw = (ctx, from, to, tileInput, color) => {
+        this.lines.forEach((line) => {
+            const fromVector = tileInput[from];
+            const toVector = tileInput[to];
+
+            drawLine(ctx, fromVector.x, fromVector.y, toVector.x, toVector.y, color)
+        });
+    };
+}
+
 const tiles = {
-    "0000": (ctx, cornerX, cornerY, cellSize) => {},
+    "0000": (ctx, cornerX, cornerY, cellSize, bounds) => {},
     "1111": (ctx, cornerX, cornerY, cellSize) => {},
     "0010": (ctx, cornerX, cornerY, cellSize) => {
         drawLine(ctx, ...leftMid(cornerX, cornerY, cellSize), ...bottomMid(cornerX, cornerY, cellSize), blob_color);
@@ -27,7 +70,7 @@ const tiles = {
     },
     "0011": (ctx, cornerX, cornerY, cellSize) => {
         drawLine(ctx, ...leftMid(cornerX, cornerY, cellSize), ...rightMid(cornerX, cornerY, cellSize), blob_color);
-    },
+    },/
     "0100": (ctx, cornerX, cornerY, cellSize) => {
         drawLine(ctx, ...topMid(cornerX, cornerY, cellSize), ...rightMid(cornerX, cornerY, cellSize), blob_color);
     },
