@@ -114,10 +114,10 @@ const Circle = function (x, y, radius, velocity = new Vec2(0, 0)) {
 canvas.width = width;
 canvas.height = height;
 
-circles.push(new Circle(150, 160, 50, new Vec2(1, 5)));
+circles.push(new Circle(150, 160, 50, new Vec2(1, 3)));
 circles.push(new Circle(500, 240, 75, new Vec2(-2, 3)));
 circles.push(new Circle(140, 70, 35, new Vec2(1, -3)));
-circles.push(new Circle(500, 563, 60, new Vec2(-7, 2)));
+circles.push(new Circle(500, 563, 60, new Vec2(-5, 1)));
 circles.push(new Circle(450, 160, 50, new Vec2(3, -2)));
 circles.push(new Circle(400, 350, 100, new Vec2(0.5, 3)));
 
@@ -180,13 +180,11 @@ const draw = () => {
     drawBackground(ctx);
 
     // myGrid.drawColors(ctx);
-    // myGrid.drawLines(ctx, grid_line_color);
+    myGrid.drawLines(ctx, grid_line_color);
     // myGrid.drawValues(ctx);
     // myGrid.drawCoordinates(ctx);
 
     // drawCorners(ctx, myGrid);
-
-    drawLine(ctx, new Vec2(0, 0), new Vec2(width, height), "#FF00FF")
 
     myGrid.forEachCell((element, x, y) => {
         drawTile(ctx, myGrid, x, y)

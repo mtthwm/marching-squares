@@ -3,6 +3,8 @@ const TileInput = function (corner, size, cornerWeights) {
     this.size = size;
     this.cornerWeights = cornerWeights;
 
+    // LINEARLY INTERPOLATED
+
     this.leftMid = () => {
         return new Vec2(corner.x, corner.y + this.size*this._skewPercent(cornerWeights[0], cornerWeights[2]));
     }
@@ -18,6 +20,8 @@ const TileInput = function (corner, size, cornerWeights) {
     this.bottomMid = () => {
         return new Vec2(corner.x + this.size*this._skewPercent(cornerWeights[2], cornerWeights[3]), corner.y + this.size);
     }
+
+    // NON LINEAR INTERPOLATED VERSION
 
     // this.leftMid = () => {
     //     return new Vec2(corner.x, corner.y + this.size * 0.5);
@@ -35,8 +39,14 @@ const TileInput = function (corner, size, cornerWeights) {
     //     return new Vec2(corner.x + this.size * 0.5, corner.y + this.size);
     // }
 
+    this._clamp = (value, min, max) => {
+        return Math.min(Math.max(value, min), max);
+    }
+
     this._skewPercent = (low, high) => {
-        return 0.5 / (high - low);
+        const result = (1 - low) / (high - low);
+        // const res
+        return result;
     };
 }
 
