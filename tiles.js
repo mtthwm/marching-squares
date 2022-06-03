@@ -53,48 +53,48 @@ const tiles = {
     "0000": (ctx, input) => {},
     "1111": (ctx, input) => {},
     "0010": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.bottomMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.bottomMid());
     },
     "0001": (ctx, input) => {
-        drawLine(ctx, input.bottomMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.bottomMid(), input.rightMid());
     },
     "0011": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.rightMid());
     },
     "0100": (ctx, input) => {
-        drawLine(ctx, input.topMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.topMid(), input.rightMid());
     },
     "0110": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.topMid(), blob_color);
-        drawLine(ctx, input.bottomMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.topMid());
+        drawLine(ctx, input.bottomMid(), input.rightMid());
     },
     "0101": (ctx, input) => {
-        drawLine(ctx, input.topMid(), input.bottomMid(), blob_color);
+        drawLine(ctx, input.topMid(), input.bottomMid());
     },
     "0111": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.topMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.topMid());
     },
     "1000": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.topMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.topMid());
     },
     "1010": (ctx, input) => {
-        drawLine(ctx, input.topMid(), input.bottomMid(), blob_color);
+        drawLine(ctx, input.topMid(), input.bottomMid());
     },
     "1001": (ctx, input) => {
-        drawLine(ctx, input.topMid(), input.rightMid(), blob_color);
-        drawLine(ctx, input.leftMid(), input.bottomMid(), blob_color);
+        drawLine(ctx, input.topMid(), input.rightMid());
+        drawLine(ctx, input.leftMid(), input.bottomMid());
     },
     "1011": (ctx, input) => {
-        drawLine(ctx, input.topMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.topMid(), input.rightMid());
     },
     "1100": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.rightMid());
     },
     "1110": (ctx, input) => {
-        drawLine(ctx, input.bottomMid(), input.rightMid(), blob_color);
+        drawLine(ctx, input.bottomMid(), input.rightMid());
     },
     "1101": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.bottomMid(), blob_color);
+        drawLine(ctx, input.leftMid(), input.bottomMid());
     },
 };
 

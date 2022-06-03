@@ -12,6 +12,11 @@ const circles = [];
 const canvas = document.getElementById("main-canvas");
 const ctx = canvas.getContext("2d");
 
+const Segment = function (from, to) {
+    this.from = from;
+    this.to = to;
+};
+
 const Circle = function (x, y, radius, velocity = new Vec2(0, 0)) {
     this.radius = radius;
     this.x = x;
@@ -191,7 +196,7 @@ const draw = () => {
         ctx.fill();
         ctx.stroke();
     });
-    
+
     // circles.forEach((element) => {
     //     element.draw(ctx);
     // });
