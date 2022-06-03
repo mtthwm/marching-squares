@@ -45,7 +45,6 @@ const TileInput = function (corner, size, cornerWeights) {
 
     this._skewPercent = (low, high) => {
         const result = (1 - low) / (high - low);
-        // const res
         return result;
     };
 }

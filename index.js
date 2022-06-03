@@ -128,11 +128,8 @@ const circleIntersectFunction = (x, y, circle) => {
 };
 
 const drawLine = (ctx, from, to, color="#FFFFFF") => {
-    ctx.strokeStyle = color;
-    ctx.beginPath();
     ctx.moveTo(from.x, from.y);
     ctx.lineTo(to.x, to.y);
-    ctx.stroke();
 };
 
 const drawRay = (ctx, position, direction, length, color="#FFFFFF") => {
@@ -180,16 +177,21 @@ const draw = () => {
     drawBackground(ctx);
 
     // myGrid.drawColors(ctx);
-    myGrid.drawLines(ctx, grid_line_color);
+    // myGrid.drawLines(ctx, grid_line_color);
     // myGrid.drawValues(ctx);
     // myGrid.drawCoordinates(ctx);
 
     // drawCorners(ctx, myGrid);
 
     myGrid.forEachCell((element, x, y) => {
+        ctx.strokeStyle = blob_color;
+        ctx.fillStyle = blob_color;
+        ctx.beginPath();
         drawTile(ctx, myGrid, x, y)
+        ctx.fill();
+        ctx.stroke();
     });
-
+    
     // circles.forEach((element) => {
     //     element.draw(ctx);
     // });
