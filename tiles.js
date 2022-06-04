@@ -49,51 +49,55 @@ const TileInput = function (corner, size, cornerWeights) {
     };
 }
 
+const Tile = function (segments) {
+    this.segments = segments;
+};
+
 const tiles = {
-    "0000": (ctx, input) => {},
-    "1111": (ctx, input) => {},
-    "0010": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.bottomMid());
+    "0000": (list, input) => {},
+    "1111": (list, input) => {},
+    "0010": (list, input) => {
+        list.push(new Segment(input.leftMid(), input.bottomMid()));
     },
-    "0001": (ctx, input) => {
-        drawLine(ctx, input.bottomMid(), input.rightMid());
+    "0001": (list, input) => {
+        list.push(new Segment(input.bottomMid(), input.rightMid()));
     },
-    "0011": (ctx, input) => {
-        drawLine(ctx, input.leftMid(), input.rightMid());
+    "0011": (list, input) => {
+        list.push(new Segment(input.leftMid(), input.rightMid()));
     },
-    "0100": (ctx, input) => {
+    "0100": (list, input) => {
         drawLine(ctx, input.topMid(), input.rightMid());
     },
-    "0110": (ctx, input) => {
+    "0110": (list, input) => {
         drawLine(ctx, input.leftMid(), input.topMid());
         drawLine(ctx, input.bottomMid(), input.rightMid());
     },
-    "0101": (ctx, input) => {
+    "0101": (list, input) => {
         drawLine(ctx, input.topMid(), input.bottomMid());
     },
-    "0111": (ctx, input) => {
+    "0111": (list, input) => {
         drawLine(ctx, input.leftMid(), input.topMid());
     },
-    "1000": (ctx, input) => {
+    "1000": (list, input) => {
         drawLine(ctx, input.leftMid(), input.topMid());
     },
-    "1010": (ctx, input) => {
+    "1010": (list, input) => {
         drawLine(ctx, input.topMid(), input.bottomMid());
     },
-    "1001": (ctx, input) => {
+    "1001": (list, input) => {
         drawLine(ctx, input.topMid(), input.rightMid());
         drawLine(ctx, input.leftMid(), input.bottomMid());
     },
-    "1011": (ctx, input) => {
+    "1011": (list, input) => {
         drawLine(ctx, input.topMid(), input.rightMid());
     },
-    "1100": (ctx, input) => {
+    "1100": (list, input) => {
         drawLine(ctx, input.leftMid(), input.rightMid());
     },
-    "1110": (ctx, input) => {
+    "1110": (list, input) => {
         drawLine(ctx, input.bottomMid(), input.rightMid());
     },
-    "1101": (ctx, input) => {
+    "1101": (list, input) => {
         drawLine(ctx, input.leftMid(), input.bottomMid());
     },
 };

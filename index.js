@@ -217,4 +217,4 @@ const update = () => {
 };
 
 let drawInterval = setInterval(draw, 40);
-let updateInterval = setInterval(update, 16);
+let updateInterval = setInterval(update, 40);
